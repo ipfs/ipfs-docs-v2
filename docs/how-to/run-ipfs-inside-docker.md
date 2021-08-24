@@ -64,6 +64,26 @@ When starting a container running ipfs for the first time with an empty data dir
 ```shell
 docker run -d --name ipfs_host -e IPFS_PROFILE=server -v $ipfs_staging:/export -v $ipfs_data:/data/ipfs -p 4001:4001 -p 4001:4001/udp -p 127.0.0.1:8080:8080 -p 127.0.0.1:5001:5001 ipfs/go-ipfs:latest
 ```
+## Environmet override
+
+You can override the default configuration during the first initialization with variables starting with `IPFCONFIG` and `_` as separators. These variables are passed directly to `ipfs config`:
+
+```shell
+docker run --rm -e IPFSCONFIG_Swarm_EnableAutoRelay=true -e IPFSCONFIG_Addresses_Swarm=[\"/ip4/0.0.0.0/tcp/4002\",\"/ip6/::/tcp/4002\"] ipfs/go-ipfs:latest
+```
+
+Configuration variables must follow these rules:
+
+- The names are case sensitive. `IPFSCONFIG_saturn=true` and `IPFS_CONFIG_Saturn=true` are not the same, so adding both to the configuration file will create two separate variables.
+- Arrays must use escaped double quotes:
+
+    ```shell
+    IPFSCONFIG_FooBar=[\"test\"]
+    ```
+
+- Syntactically valid config will **not** cause any errors.
+    - Invalid variables will be ignored. For example, `IPFSCONFIG_pluto_=true` will _not_ create a `pluto_` variable.
+    - Invalid values will fail initialization. For example, `IPFSCONFIG_foobar=trues` will cause IPFS to output an error.
 
 ## Private swarms inside Docker
 
