@@ -2,6 +2,8 @@
   <main class="page">
     <slot name="top" />
 
+    <TaskCompletionSurveyBanner project="ipfs-docs" />
+
     <Content class="theme-default-content" />
 
     <div class="content-footer" v-if="!isContentStatus">
@@ -26,6 +28,7 @@
 import PageEdit from '@parent-theme/components/PageEdit.vue'
 import PageNav from '@parent-theme/components/PageNav.vue'
 
+import TaskCompletionSurveyBanner from '@carsy/task-completion-survey-banner/src/index.vue'
 import Feedback from './Feedback.vue'
 import LegacyCallout from './LegacyCallout.vue'
 import Analytics from './Analytics.vue'
@@ -39,7 +42,8 @@ export default {
     Feedback,
     LegacyCallout,
     Analytics,
-    ScrollPatch
+    ScrollPatch,
+    TaskCompletionSurveyBanner
   },
   props: ['sidebarItems'],
   computed: {
@@ -83,6 +87,11 @@ export default {
 
 .content-feedback {
   padding: 0 2rem;
+}
+
+#pl--task-completion-survey-banner {
+  --margin: 2rem 1rem 0 1rem;
+  max-width: 740px;
 }
 
 @media (min-width: $MQMobile) {
